@@ -1,6 +1,7 @@
 package com.arunrangad.studentapi.service;
 
 import com.arunrangad.studentapi.entity.Student;
+import com.arunrangad.studentapi.exception.ResourceNotFoundException;
 import com.arunrangad.studentapi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id){
-        return repo.findById(id).orElse(null);
+        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Student not Found with id: " + id));
     }
 
     public Student updateStudent(Long id, Student updated){

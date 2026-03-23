@@ -2,6 +2,7 @@ package com.arunrangad.studentapi.controller;
 
 import com.arunrangad.studentapi.entity.Student;
 import com.arunrangad.studentapi.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class StudentController {
     private StudentService service;
 
     @PostMapping
-    public Student addStudent(@RequestBody Student s){
+    public Student addStudent(@Valid @RequestBody Student s){
         return service.addStudent(s);
     }
 
