@@ -4,6 +4,8 @@ import com.arunrangad.studentapi.entity.Student;
 import com.arunrangad.studentapi.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,29 +18,30 @@ public class StudentController {
     private StudentService service;
 
     @PostMapping
-    public Student addStudent(@Valid @RequestBody Student s){
-        return service.addStudent(s);
+    public ResponseEntity<Student> addStudent(@Valid @RequestBody Student s){
+        Student saved = service.addStudent(s);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Student> getAllStudents(){
-        return service.getAllStudents();
+    public ResponseEntity<List<Student>> getAllStudents(){
+        return ResponseEntity.ok(service.getAllStudents());
     }
 
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id){
-        return service.getStudentById(id);
+    public ResponseEntity<Student> getStudent(@PathVariable Long id){
+        return ResponseEntity.ok(service.getStudentById(id));
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student s){
-        return service.updateStudent(id, s);
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student s){
+        return ResponseEntity.ok(service.updateStudent(id, s));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Long id){
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id){
         service.deleteStudent(id);
-        return "Student deleted Successfully";
+        return ResponseEntity.ok("Student deleted Successfully");
     }
 
 }

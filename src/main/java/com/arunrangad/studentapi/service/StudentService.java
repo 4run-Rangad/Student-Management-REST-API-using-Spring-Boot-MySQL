@@ -27,18 +27,14 @@ public class StudentService {
     }
 
     public Student updateStudent(Long id, Student updated){
-        Student s = repo.findById(id).orElse(null);
-        if(s!= null){
-            s.setName(updated.getName());
+        Student s = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Student Not Found"));
 
-            s.setEmail(updated.getEmail());
+        s.setName(updated.getName());
+        s.setEmail(updated.getEmail());
+        s.setCourse(updated.getCourse());
+        s.setMarks(updated.getMarks());
 
-            s.setCourse(updated.getCourse());
-
-            s.setMarks(updated.getMarks());
-            return repo.save(s);
-        }
-        return null;
+        return repo.save(s);
     }
 
     public void deleteStudent(Long id){
